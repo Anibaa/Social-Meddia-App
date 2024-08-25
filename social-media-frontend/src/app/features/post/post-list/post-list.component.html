@@ -1,0 +1,114 @@
+<div class="post-list-container">
+  <!-- Refresh Loader -->
+  <div class="loader" *ngIf="isLoading"></div>
+
+
+  <!-- Create Post Section -->
+  <div class="post-create">
+    <input [(ngModel)]="newPostText" type="text" placeholder="What's on your mind?" />
+    <button [disabled]="!newPostText.trim()" (click)="createPost()">Post</button>
+    <p *ngIf="postSuccess" class="success-message">Post successfully created!</p>
+  </div>
+
+  <!-- Most Liked Posts Section -->
+  <div class="most-liked-posts" *ngIf="filteredPosts.length > 0">
+    <h3>Most Liked Posts</h3>
+    <div class="post" *ngFor="let post of filteredMostLikedPosts">
+      <div class="post-header">
+        <div class="avatar-placeholder post-avatar">
+          <i class="fas fa-user-circle"></i>
+        </div>
+        <div class="post-author-info">
+          <p class="author-name">{{ post.authorName }}</p>
+        </div>
+      </div>
+      <p>{{ post.text }}</p>
+      <p class="post-likes">Likes: {{ post.likes }}</p>
+      <button class="btn-like" (click)="onLikePost(post)">Like</button>
+
+      <div class="comments">
+        <div class="comment" *ngFor="let comment of post.comments.slice(0, 2)">
+          <div class="comment-header">
+            <div class="avatar-placeholder comment-avatar">
+              <i class="fas fa-user"></i>
+            </div>
+            <p class="comment-author">{{ comment.authorName }}</p>
+          </div>
+          <p class="comment-text">{{ comment.text }}</p>
+          <p class="comment-date">{{ comment.date | date }}</p>
+        </div>
+        <span *ngIf="post.comments.length > 2" (click)="toggleComments(post)" class="more-comments-toggle">
+          {{ showMoreComments[post._id] ? 'Voir Moins' : 'Voir Plus' }}
+        </span>
+        <div *ngIf="showMoreComments[post._id]" class="more-comments">
+          <div class="comment" *ngFor="let comment of post.comments.slice(2)">
+            <div class="comment-header">
+              <div class="avatar-placeholder comment-avatar">
+                <i class="fas fa-user"></i>
+              </div>
+              <p class="comment-author">{{ comment.authorName }}</p>
+            </div>
+            <p class="comment-text">{{ comment.text }}</p>
+            <p class="comment-date">{{ comment.date | date }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="comment-input">
+        <input type="text" placeholder="Add a comment..." [(ngModel)]="commentInput[post._id || '']" />
+        <button [disabled]="!commentInput[post._id || ''].trim()" class="btn-comment" (click)="onAddComment(post)">Comment</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- All Posts Section -->
+  <div class="all-posts">
+    <h3>All Posts</h3>
+    <div class="post" *ngFor="let post of filteredPosts">
+      <div class="post-header">
+        <div class="avatar-placeholder post-avatar">
+          <i class="fas fa-user-circle"></i>
+        </div>
+        <div class="post-author-info">
+          <p class="author-name">{{ post.authorName }}</p>
+        </div>
+      </div>
+      <p>{{ post.text }}</p>
+      <p class="post-likes">Likes: {{ post.likes }}</p>
+      <button class="btn-like" (click)="onLikePost(post)">Like</button>
+
+      <div class="comments">
+        <div class="comment" *ngFor="let comment of post.comments.slice(0, 2)">
+          <div class="comment-header">
+            <div class="avatar-placeholder comment-avatar">
+              <i class="fas fa-user"></i>
+            </div>
+            <p class="comment-author">{{ comment.authorName }}</p>
+          </div>
+          <p class="comment-text">{{ comment.text }}</p>
+          <p class="comment-date">{{ comment.date | date }}</p>
+        </div>
+        <span *ngIf="post.comments.length > 2" (click)="toggleComments(post)" class="more-comments-toggle">
+          {{ showMoreComments[post._id] ? 'Voir Moins' : 'Voir Plus' }}
+        </span>
+        <div *ngIf="showMoreComments[post._id]" class="more-comments">
+          <div class="comment" *ngFor="let comment of post.comments.slice(2)">
+            <div class="comment-header">
+              <div class="avatar-placeholder comment-avatar">
+                <i class="fas fa-user"></i>
+              </div>
+              <p class="comment-author">{{ comment.authorName }}</p>
+            </div>
+            <p class="comment-text">{{ comment.text }}</p>
+            <p class="comment-date">{{ comment.date | date }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="comment-input">
+        <input type="text" placeholder="Add a comment..." [(ngModel)]="commentInput[post._id || '']" />
+        <button [disabled]="!commentInput[post._id || ''].trim()" class="btn-comment" (click)="onAddComment(post)">Comment</button>
+      </div>
+    </div>
+  </div>
+</div>

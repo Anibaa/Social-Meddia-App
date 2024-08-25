@@ -1,0 +1,41 @@
+<nav class="navbar">
+  <div class="logo-container" routerLink="/posts">
+    <img src="assets/Hrissa.png" alt="App Logo" class="logo" />
+    <span class="app-name">Tunisian Social Media</span>
+  </div>
+  <div class="search-container">
+    <div class="search-bar">
+      <input [(ngModel)]="searchTerm" (ngModelChange)="onSearchTermChange()" type="text" placeholder="Search posts..." />
+    </div>
+  </div>
+  <button class="navbar-toggle" (click)="toggleNavbar()">
+    <i class="fas fa-bars"></i>
+  </button>
+  <ul class="navbar-menu" [ngClass]="{'show': isNavbarOpen}">
+    <li><a routerLink="/posts" (click)="closeNavbar()">Accueil</a></li>
+    <li><a routerLink="/create" (click)="closeNavbar()">New Post</a></li>
+    <li><app-notification></app-notification></li>
+    <li><a routerLink="/profile" (click)="closeNavbar()"><i class="fas fa-user"></i></a></li>
+    <li class="dropdown">
+      <a href="#" (click)="toggleDropdown($event)" class="dropdown-toggle">
+        <i class="fas fa-cog"></i>
+      </a>
+      <div class="dropdown-menu" [ngClass]="{'show': showDropdown}">
+        <div class="dropdown-item">
+          <div class="dropdown-icon-circle">
+            <i class="fas fa-sign-out-alt"></i>
+          </div>
+          <div class="dropdown-content">
+            <a href="#" (click)="logout()" class="dropdown-title">Logout</a>
+          </div>
+        </div>
+        <div class="dropdown-item">
+          <div class="dropdown-icon-circle">
+            <i class="fas fa-user-cog"></i>
+          </div>
+          <a href="#" class="dropdown-title">Settings</a>
+        </div>
+      </div>
+    </li>
+  </ul>
+</nav>

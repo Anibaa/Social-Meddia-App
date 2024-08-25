@@ -1,0 +1,19 @@
+<div class="post-create">
+    <textarea
+      [(ngModel)]="postText"
+      placeholder="What's on your mind?"
+      rows="4"
+      maxlength="400"
+      (input)="onTextInput()"
+    ></textarea>
+    <div class="toolbar">
+      <button (click)="addImage()">Add Image</button>
+      <button (click)="addEmoji()">Add Emoji</button>
+    </div>
+    <div class="post-footer">
+      <p class="char-count">{{ remainingCharacters }} characters remaining</p>
+      <button (click)="createPost()" [disabled]="isPosting || !postText.trim()">Post</button>
+    </div>
+    <p *ngIf="isPosting" class="loading-message">Posting...</p>
+  </div>
+  
